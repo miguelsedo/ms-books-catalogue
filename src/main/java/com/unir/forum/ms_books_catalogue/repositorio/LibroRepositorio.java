@@ -4,20 +4,33 @@ import com.unir.forum.ms_books_catalogue.models.libros.Libro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface LibroRepositorio extends JpaRepository<Libro, Long> {
 
     // Buscar por título (parcial, ignorando mayúsculas/minúsculas)
-    List<Libro> findByTitulo(String titulo);
-
-    // Buscar por género exacto
-    List<Libro> findByGenero(String genero);
+    List<Libro> findByTitleContainingIgnoreCase(String title);
 
     // Buscar por autor (parcial, ignorando mayúsculas/minúsculas)
-    List<Libro> findByAutor(String autor);
+    List<Libro> findByAuthorContainingIgnoreCase(String author);
 
-    // Filtrar por precio dentro de un rango
-    List<Libro> findByPrecioBetween(Double precioMin, Double precioMax);
+    // Buscar por categoría exacta
+    List<Libro> findByCategory(String category);
+
+    // Filtrar por fecha de publicación dentro de un rango
+    List<Libro> findByPublicationDateBetween(LocalDate startDate, LocalDate endDate);
+
+    // Buscar por ISBN
+    List<Libro> findByIsbn(String isbn);
+
+    // Filtrar por rating mínimo
+    List<Libro> findByRatingGreaterThanEqual(int rating);
+
+    // Buscar por visibilidad
+    List<Libro> findByVisibility(boolean visibility);
+
+    // Buscar por stock disponible
+    List<Libro> findByStockGreaterThan(int stock);
 }
